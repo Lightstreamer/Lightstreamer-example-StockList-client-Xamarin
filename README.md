@@ -16,9 +16,9 @@ This project shows how is it possible to integrate the <b>.Net Standard Client A
 
 ### Dig the Code
 
-* `App.xaml` (and `App.xaml.cs`) is the main application file; it contains application events handling code (application start, sleep, resume, etc.), ... .
+* `App.xaml` (and `App.xaml.cs`) is the main application file; it contains application events handling code (application start, sleep, resume, etc.).
 * `MainPage.xaml` (and `MainPage.xaml.cs`) is the main page of the app. Consists in a simple table containing the last price of six stocks updated in real-time (simulated); clicking or tapping into one of them open the Details page.
-* `DetailsPage.xaml` (and `DetailsPage.xaml.cs`) is the Details page of the app and contains details info of a stock (Name, Last Price, Last Time, Max, Mib, Best Bid, Best Ask, Change %), also all these informations are real-time updated.
+* `DetailsPage.xaml` (and `DetailsPage.xaml.cs`) is the Details page of the app and contains details info of a stock (Name, Last Price, Last Time, Max, Min, Best Bid, Best Ask, Change %), also all these informations are real-time updated.
 * `AboutPage.xaml` and (`AboutPage.xaml.cs`) is tha About page and contains a brief intoduction to the demo.
 * `RTFeed.cs` class acts as a bridge between the pages and the Lightstreamer Client library, in order to subscribe the necessary Items and collect all updates in real time. Indeed this class is used as BindingContext for the viusal Xamarin widgets.
 This class also takes care of opening and closing the connection to the Lightstreamer server.
