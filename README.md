@@ -35,7 +35,7 @@ If in trouble, check out the [Lightstreamer forum](https://forums.lightstreamer.
 
 To build your own version of the demo follow these steps:
 
-* Import the source codes of this project in a viusual studio cross-platform project (Xamarin App), we have used the Visual Studio 2017. You can download it from the [Microsoft website](https://visualstudio.microsoft.com/en/xamarin/).<br>
+* Import the source codes of this project in a Viusual C# Cross-Platform project (Xamarin.Forms). We have used the Visual Studio 2017 and you can download it from the [Microsoft website](https://visualstudio.microsoft.com/en/xamarin/).<br>
 * You can choose the target devices between iOs, Androin and UWP.
 * You may run the demo against your local server or using our online server at http://push.lightstreamer.com:80. The server to which the demo will connect to is configured in the `RTfeed.cs` file; by default the demo targets our demo server at https://push.lightstreamer.com.<br>
   * In the former case, note that, as prerequisite, the [Lightstreamer - Stock- List Demo - Java Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Stocklist-adapter-java) has to be deployed on your local Lightstreamer Server instance. Please check out that project and follow the installation instructions provided with it.
