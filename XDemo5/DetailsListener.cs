@@ -18,6 +18,7 @@
 
 using Lightstreamer.DotNetStandard.Client;
 using System.Diagnostics;
+using Xamarin.Forms;
 
 namespace XDemo5
 {
@@ -72,6 +73,13 @@ namespace XDemo5
             if (update.IsValueChanged(6))
             {
                 rTfeed.DetailsChg = update.GetNewValue(6);
+                if (float.Parse(update.GetNewValue(6)) > 0)
+                {
+                    rTfeed.DetailsChgDiff = Color.Green;
+                } else
+                {
+                    rTfeed.DetailsChgDiff = Color.Red;
+                }
             }
 
             if (update.IsValueChanged(7))

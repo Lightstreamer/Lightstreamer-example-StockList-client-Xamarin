@@ -508,6 +508,21 @@ namespace XDemo5
             }
         }
 
+        private Color detailsChgDiff;
+        public Color DetailsChgDiff
+        {
+            get
+            {
+                return detailsChgDiff;
+            }
+            set 
+            {
+                
+                detailsChgDiff = value;
+                OnPropertyChanged("DetailsChgDiff");
+            }
+        }
+
         private string detailsAsk;
         public string DetailsAsk
         {

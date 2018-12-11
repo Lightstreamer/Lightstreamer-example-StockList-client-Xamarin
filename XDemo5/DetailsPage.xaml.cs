@@ -86,6 +86,8 @@ namespace XDemo5
 
             txtDtls[5].SetBinding(TextCell.TextProperty, "DetailsChg", BindingMode.OneWay);
 
+            txtDtls[5].SetBinding(TextCell.TextColorProperty, "DetailsChgDiff", BindingMode.OneWay);
+
             txtDtls[6].SetBinding(TextCell.TextProperty, "DetailsAsk", BindingMode.OneWay);
 
             txtDtls[7].SetBinding(TextCell.TextProperty, "DetailsBid", BindingMode.OneWay);
