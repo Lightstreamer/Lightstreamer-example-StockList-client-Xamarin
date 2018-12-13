@@ -4,7 +4,6 @@
 
 This project contains a demo application showing the integration between the [Lightstreamer .Net Standard Client](https://www.lightstreamer.com/api/ls-dotnetstandard-client/latest/) library and [Xamarin](https://docs.microsoft.com/it-it/xamarin/) cross-platform mobile application development tool.
 
-## Live Demo
 ![Demo ScreenShot](screen_large.png)<br>
 
 ## Details
@@ -37,13 +36,13 @@ To build your own version of the demo follow these steps:
 
 * Import the source codes of this project in a Viusual C# Cross-Platform project (Xamarin.Forms). We have used the Visual Studio 2017 and you can download it from the [Microsoft website](https://visualstudio.microsoft.com/en/xamarin/).<br>
 * You can choose the target devices between iOs, Androin and UWP.
-* You may run the demo against your local server or using our online server at http://push.lightstreamer.com:80. The server to which the demo will connect to is configured in the `RTfeed.cs` file; by default the demo targets our demo server at https://push.lightstreamer.com.<br>
-  * In the former case, note that, as prerequisite, the [Lightstreamer - Stock- List Demo - Java Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Stocklist-adapter-java) has to be deployed on your local Lightstreamer Server instance. Please check out that project and follow the installation instructions provided with it.
-* You should complete this project with the Lightstreamer .NET Standard Client library, to be used for the build process, trough NuGet. Follow these steps:
+* You should complete this project with the <b>Lightstreamer .NET Standard Client</b> library, to be used for the build process, trough NuGet. Follow these steps:
 	* In the "Solution Explorer" tab, right click on the project and choose `Manage NuGet Packages ...`
 	* In the Search text box enter `Lightstreamer`
 	* Choose Lightstreamer.DotNetStandard.Client then click `Install` and then `Ok`
-
+* You may run the demo against your local server or using our online server `push.lightstreamer.com`. The server to which the demo will connect to is configured in the `RTfeed.cs` file; by default the demo targets our demo server at https://push.lightstreamer.com.<br>
+	* In the former case, note that, as prerequisite, the [Lightstreamer - Stock- List Demo - Java Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Stocklist-adapter-java) has to be deployed on your local Lightstreamer Server instance. Please check out that project and follow the installation instructions provided with it.
+* Launch the Debug choosing your preferred platform and enjoy.
 
 ## See Also
 
