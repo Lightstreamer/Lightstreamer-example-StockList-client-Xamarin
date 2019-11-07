@@ -16,13 +16,13 @@
  */
 #endregion License
 
-using Lightstreamer.DotNetStandard.Client;
+using com.lightstreamer.client;
 using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace XDemo5
 {
-    internal class DetailsListener : IHandyTableListener
+    internal class DetailsListener : SubscriptionListener
     {
         private RTfeed rTfeed;
 
@@ -30,88 +30,125 @@ namespace XDemo5
         {
             this.rTfeed = rTfeed;
         }
-        private string NotifyUpdate(IUpdateInfo update)
+
+        private string NotifyUpdate(ItemUpdate update)
         {
             return update.Snapshot ? "snapshot" : "update";
         }
 
-        public void OnUpdate(int itemPos, string itemName, IUpdateInfo update)
-        {
+        // ---
 
+        void SubscriptionListener.onClearSnapshot(string itemName, int itemPos)
+        {
+            Debug.WriteLine("Clear snapshot evernt received for " + itemName);
+        }
+
+        void SubscriptionListener.onCommandSecondLevelItemLostUpdates(int lostUpdates, string key)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        void SubscriptionListener.onCommandSecondLevelSubscriptionError(int code, string message, string key)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        void SubscriptionListener.onEndOfSnapshot(string itemName, int itemPos)
+        {
+            Debug.WriteLine("End of snapshot received for " + itemName);
+        }
+
+        void SubscriptionListener.onItemLostUpdates(string itemName, int itemPos, int lostUpdates)
+        {
+            Debug.WriteLine("Lost " + lostUpdates + " updates for " + itemName);
+        }
+
+        void SubscriptionListener.onItemUpdate(ItemUpdate update)
+        {
             Debug.WriteLine("Details received.");
 
             Debug.WriteLine(NotifyUpdate(update) +
-                            " for " + itemPos + ":" + update.GetNewValue(1) + " - " + update.GetNewValue(3)
+                            " for " + update.ItemName + ":" + update.getValue(1) + " - " + update.getValue(3)
                            );
-           
 
-            if (update.IsValueChanged(1))
+
+            if (update.isValueChanged(1))
             {
-                rTfeed.DetailsName = update.GetNewValue(1);
+                rTfeed.DetailsName = update.getValue(1);
             }
 
-            if (update.IsValueChanged(2))
+            if (update.isValueChanged(2))
             {
-                rTfeed.DetailsLast = update.GetNewValue(2);
+                rTfeed.DetailsLast = update.getValue(2);
             }
 
-            if (update.IsValueChanged(3))
+            if (update.isValueChanged(3))
             {
-                rTfeed.DetailsTime = update.GetNewValue(3);
+                rTfeed.DetailsTime = update.getValue(3);
             }
 
-            if (update.IsValueChanged(4))
+            if (update.isValueChanged(4))
             {
-                rTfeed.DetailsMin = update.GetNewValue(4);
+                rTfeed.DetailsMin = update.getValue(4);
             }
 
-            if (update.IsValueChanged(5))
+            if (update.isValueChanged(5))
             {
-                rTfeed.DetailsMax = update.GetNewValue(5);
+                rTfeed.DetailsMax = update.getValue(5);
             }
 
-            if (update.IsValueChanged(6))
+            if (update.isValueChanged(6))
             {
-                rTfeed.DetailsChg = update.GetNewValue(6);
-                if (float.Parse(update.GetNewValue(6)) > 0)
+                rTfeed.DetailsChg = update.getValue(6);
+                if (float.Parse(update.getValue(6)) > 0)
                 {
                     rTfeed.DetailsChgDiff = Color.Green;
-                } else
+                }
+                else
                 {
                     rTfeed.DetailsChgDiff = Color.Red;
                 }
             }
 
-            if (update.IsValueChanged(7))
+            if (update.isValueChanged(7))
             {
-                rTfeed.DetailsBid = update.GetNewValue(7);
+                rTfeed.DetailsBid = update.getValue(7);
             }
 
-            if (update.IsValueChanged(8))
+            if (update.isValueChanged(8))
             {
-                rTfeed.DetailsAsk = update.GetNewValue(8);
+                rTfeed.DetailsAsk = update.getValue(8);
             }
-
         }
 
-        public void OnSnapshotEnd(int itemPos, string itemName)
+        void SubscriptionListener.onListenEnd(Subscription subscription)
         {
-            Debug.WriteLine("end of snapshot for " + itemPos);
+            // ...
         }
 
-        public void OnRawUpdatesLost(int itemPos, string itemName, int lostUpdates)
+        void SubscriptionListener.onListenStart(Subscription subscription)
         {
-            Debug.WriteLine(lostUpdates + " updates lost for " + itemPos);
+            // ...
         }
 
-        public void OnUnsubscr(int itemPos, string itemName)
+        void SubscriptionListener.onSubscription()
         {
-            Debug.WriteLine("unsubscr " + itemPos);
+            Debug.WriteLine("Subscription");
         }
 
-        public void OnUnsubscrAll()
+        void SubscriptionListener.onSubscriptionError(int code, string message)
         {
-            Debug.WriteLine("unsubscr table");
+            Debug.WriteLine("Subscription Error: " + message + " (" + code +").");
+        }
+
+        void SubscriptionListener.onUnsubscription()
+        {
+            Debug.WriteLine("Unsubscription");
+        }
+
+        void SubscriptionListener.onRealMaxFrequency(string frequency)
+        {
+            Debug.WriteLine("Real Max Frequency: " + frequency);
         }
     }
 }
