@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
  * Copyright (c) Lightstreamer Srl
  *
@@ -20,7 +20,7 @@ using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 
-using Lightstreamer.DotNetStandard.Client;
+using com.lightstreamer.client;
 using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -30,18 +30,17 @@ namespace XDemo5
     public class RTfeed : INotifyPropertyChanged
     {
 
-        LSClient ls;
-        SubscribedTableKey stk;
-        SubscribedTableKey dtk;
-        readonly ConnectionInfo connInfo;
+        public LightstreamerClient ls;
+        Subscription stk;
+        Subscription dtk;
+        readonly string pushServerUrl;
+        readonly string adapter;
 
         public RTfeed()
         {
-            connInfo = new ConnectionInfo
-            {
-                PushServerUrl = "https://push.lightstreamer.com",
-                Adapter = "DEMO",
-            };
+
+            pushServerUrl = "https://push.lightstreamer.com";
+            adapter = "DEMO";
 
             Debug.WriteLine("RTFeed Co.");
         }
@@ -53,7 +52,7 @@ namespace XDemo5
                 return;
             }
 
-            ls.CloseConnection();
+            ls.disconnect();
 
             ls = null;
         }
@@ -66,27 +65,27 @@ namespace XDemo5
 
             if (ls != null)
             {
-                ls.CloseConnection();
+                ls.disconnect();
 
                 Thread.Sleep(1500);
             }
 
             while (noException)
             {
-                ls = new LSClient();
                 try
                 {
-                    ls.OpenConnection(connInfo, new TestConnectionListener(this));
+                    ls = new LightstreamerClient(pushServerUrl, adapter);
+
+                    ls.addListener(new TestConnectionListener(this));
+                    ls.connect();
+                        
                     noException = false;
-                }
-                catch (Lightstreamer.DotNetStandard.Client.PushConnException pce)
-                {
-                    Debug.WriteLine("Connection failure: " + pce.Message + " - " + pce.StackTrace);
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Unexpected event: " + e.StackTrace);
+                    Debug.WriteLine("Connection failure: " + e.Message + " - " + e.StackTrace);
                 }
+                
             }
             Debug.WriteLine("Connection ... ");
 
@@ -100,7 +99,7 @@ namespace XDemo5
                 {
                     try
                     {
-                        ls.UnsubscribeTable(dtk);
+                        ls.unsubscribe(dtk);
                     }
                     catch (Exception e)
                     {
@@ -116,7 +115,7 @@ namespace XDemo5
         public void SubscribeDetails(int pos)
         {
             var groupName = "item";
-            var schemaName = "stock_name last_price time min max pct_change bid ask";
+            var schemaName = new string[8] { "stock_name", "last_price", "time", "min", "max", "pct_change", "bid", "ask" };
 
             groupName += pos;
 
@@ -129,7 +128,7 @@ namespace XDemo5
                 {
                     try
                     {
-                        ls.UnsubscribeTable(dtk);
+                        ls.unsubscribe(dtk);
                     }
                     catch (Exception e)
                     {
@@ -145,24 +144,20 @@ namespace XDemo5
 
             Debug.WriteLine("Subscribe Details for " + groupName);
 
-            SimpleTableInfo tableInfo = new SimpleTableInfo(
-                       groupName,
-                       "MERGE",
-                       schemaName,
-                       true
-                       )
-            {
-                DataAdapter = "QUOTE_ADAPTER",
-                RequestedMaxFrequency = 1.0
-            };
+            dtk =  new Subscription("MERGE");
+            dtk.Fields = schemaName;
+            dtk.Items = new string[1] { groupName };
+
+            dtk.DataAdapter = "QUOTE_ADAPTER";
+            dtk.RequestedSnapshot = "yes";
+
+            dtk.RequestedMaxFrequency = "1.0";
 
             try
             {
-                dtk = ls.SubscribeTable(
-                    tableInfo,
-                    new DetailsListener(this),
-                    false
-                );
+                dtk.addListener(new DetailsListener(this));
+
+                ls.subscribe(dtk);
             }
             catch
             {
@@ -172,32 +167,28 @@ namespace XDemo5
 
         public void SubscribeAll()
         {
-            var groupName = "item2 item7 item11 item18 item22 item27";
-            // var groupName = "item2";
-            var schemaName = "stock_name last_price";
+            var groupName = new string[6] { "item2", "item7", "item11", "item18", "item22", "item27" };
+            var schemaName = new string[2] { "stock_name", "last_price" };
 
-            SimpleTableInfo tableInfo = new SimpleTableInfo(
-                       groupName,
-                       "MERGE",
-                       schemaName,
-                       true
-                       )
+            Console.WriteLine("Subscribe all stocks.");
+
+            stk = new Subscription("MERGE", groupName, schemaName)
             {
                 DataAdapter = "QUOTE_ADAPTER",
-                RequestedMaxFrequency = 1.0
+                RequestedSnapshot = "yes",
+
+                RequestedMaxFrequency = "1.0"
             };
 
             try
             {
-                stk = ls.SubscribeTable(
-                    tableInfo,
-                    new QuoteListener(this),
-                    false
-                );
+                stk.addListener(new QuoteListener(this));
+
+                ls.subscribe(stk);
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine(".");
+                Console.WriteLine("Subscription failed, " + e.Message);
             }
         }
 
