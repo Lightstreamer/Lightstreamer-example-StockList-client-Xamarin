@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
  * Copyright (c) Lightstreamer Srl
  *
@@ -16,12 +16,12 @@
  */
 #endregion License
 
-using Lightstreamer.DotNetStandard.Client;
+using com.lightstreamer.client;
 using System.Diagnostics;
 
 namespace XDemo5
 {
-    internal class QuoteListener : IHandyTableListener
+    internal class QuoteListener : SubscriptionListener
     {
         private RTfeed rTfeed;
 
@@ -30,129 +30,165 @@ namespace XDemo5
             this.rTfeed = rTfeed;
         }
 
-        private string NotifyUpdate(IUpdateInfo update)
+        private string NotifyUpdate(ItemUpdate update)
         {
             return update.Snapshot ? "snapshot" : "update";
         }
 
-        public void OnUpdate(int itemPos, string itemName, IUpdateInfo update)
+        void SubscriptionListener.onClearSnapshot(string itemName, int itemPos)
         {
+            Debug.WriteLine("Clear snapshot evernt received for " + itemName);
+        }
+
+        void SubscriptionListener.onCommandSecondLevelItemLostUpdates(int lostUpdates, string key)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        void SubscriptionListener.onCommandSecondLevelSubscriptionError(int code, string message, string key)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        void SubscriptionListener.onEndOfSnapshot(string itemName, int itemPos)
+        {
+            Debug.WriteLine("End of snapshot received for " + itemName);
+        }
+
+        void SubscriptionListener.onItemLostUpdates(string itemName, int itemPos, int lostUpdates)
+        {
+            Debug.WriteLine("Lost " + lostUpdates + " updates for " + itemName);
+        }
+
+        void SubscriptionListener.onItemUpdate(ItemUpdate update)
+        {
+            int itemPos = update.ItemPos;
 
             Debug.WriteLine("Update received.");
 
             Debug.WriteLine(NotifyUpdate(update) +
-                            " for " + itemPos + ":" + update.GetNewValue(1) + " - " + update.GetNewValue(2)
+                            " for " + itemPos + ":" + update.getValue(1) + " - " + update.getValue(2)
                            );
 
             if (itemPos == 1)
             {
 
-                if (update.IsValueChanged(2))
+                if (update.isValueChanged(2))
                 {
-                    rTfeed.LabelText0 = update.GetNewValue(2);
+                    rTfeed.LabelText0 = update.getValue(2);
                 }
 
 
-                if (update.IsValueChanged(1))
+                if (update.isValueChanged(1))
                 {
-                    rTfeed.DescText0 = update.GetNewValue(1);
+                    rTfeed.DescText0 = update.getValue(1);
                 }
             }
-            
+
             if (itemPos == 2)
             {
 
-                if (update.IsValueChanged(2))
+                if (update.isValueChanged(2))
                 {
-                    rTfeed.LabelText1 = update.GetNewValue(2);
+                    rTfeed.LabelText1 = update.getValue(2);
                 }
 
 
-                if (update.IsValueChanged(1))
+                if (update.isValueChanged(1))
                 {
-                    rTfeed.DescText1 = update.GetNewValue(1);
+                    rTfeed.DescText1 = update.getValue(1);
                 }
             }
 
             if (itemPos == 3)
             {
 
-                if (update.IsValueChanged(2))
+                if (update.isValueChanged(2))
                 {
-                    rTfeed.LabelText2 = update.GetNewValue(2);
+                    rTfeed.LabelText2 = update.getValue(2);
                 }
 
 
-                if (update.IsValueChanged(1))
+                if (update.isValueChanged(1))
                 {
-                    rTfeed.DescText2 = update.GetNewValue(1);
+                    rTfeed.DescText2 = update.getValue(1);
                 }
             }
 
             if (itemPos == 4)
             {
 
-                if (update.IsValueChanged(2))
+                if (update.isValueChanged(2))
                 {
-                    rTfeed.LabelText3 = update.GetNewValue(2);
+                    rTfeed.LabelText3 = update.getValue(2);
                 }
 
 
-                if (update.IsValueChanged(1))
+                if (update.isValueChanged(1))
                 {
-                    rTfeed.DescText3 = update.GetNewValue(1);
+                    rTfeed.DescText3 = update.getValue(1);
                 }
             }
 
             if (itemPos == 5)
             {
 
-                if (update.IsValueChanged(2))
+                if (update.isValueChanged(2))
                 {
-                    rTfeed.LabelText4 = update.GetNewValue(2);
+                    rTfeed.LabelText4 = update.getValue(2);
                 }
 
 
-                if (update.IsValueChanged(1))
+                if (update.isValueChanged(1))
                 {
-                    rTfeed.DescText4 = update.GetNewValue(1);
+                    rTfeed.DescText4 = update.getValue(1);
                 }
             }
 
             if (itemPos == 6)
             {
 
-                if (update.IsValueChanged(2))
+                if (update.isValueChanged(2))
                 {
-                    rTfeed.LabelText5 = update.GetNewValue(2);
+                    rTfeed.LabelText5 = update.getValue(2);
                 }
 
 
-                if (update.IsValueChanged(1))
+                if (update.isValueChanged(1))
                 {
-                    rTfeed.DescText5 = update.GetNewValue(1);
+                    rTfeed.DescText5 = update.getValue(1);
                 }
             }
         }
 
-        public void OnSnapshotEnd(int itemPos, string itemName)
+        void SubscriptionListener.onListenEnd(Subscription subscription)
         {
-            Debug.WriteLine("end of snapshot for " + itemPos);
+            // ...
         }
 
-        public void OnRawUpdatesLost(int itemPos, string itemName, int lostUpdates)
+        void SubscriptionListener.onListenStart(Subscription subscription)
         {
-            Debug.WriteLine(lostUpdates + " updates lost for " + itemPos);
+            // ...
         }
 
-        public void OnUnsubscr(int itemPos, string itemName)
+        void SubscriptionListener.onSubscription()
         {
-            Debug.WriteLine("unsubscr " + itemPos);
+            Debug.WriteLine("Subscription");
         }
 
-        public void OnUnsubscrAll()
+        void SubscriptionListener.onSubscriptionError(int code, string message)
         {
-            Debug.WriteLine("unsubscr table");
+            Debug.WriteLine("Subscription Error: " + message + " (" + code + ").");
+        }
+
+        void SubscriptionListener.onUnsubscription()
+        {
+            Debug.WriteLine("Unsubscription");
+        }
+
+        void SubscriptionListener.onRealMaxFrequency(string frequency)
+        {
+            Debug.WriteLine("Real Max Frequency: " + frequency);
         }
     }
 }
