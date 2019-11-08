@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
  * Copyright (c) Lightstreamer Srl
  *
@@ -16,13 +16,13 @@
  */
 #endregion License
 
-using Lightstreamer.DotNetStandard.Client;
+using com.lightstreamer.client;
 using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace XDemo5
 {
-    internal class TestConnectionListener : IConnectionListener
+    internal class TestConnectionListener : ClientListener
     {
         private RTfeed rTfeed;
         private long bytes;
@@ -32,88 +32,100 @@ namespace XDemo5
             this.rTfeed = rTfeed;
         }
 
-        public void OnConnectionEstablished()
+        // ---
+
+        public void onListenEnd(LightstreamerClient client)
         {
-            Debug.WriteLine("Connection established");
-            rTfeed.StatusText = "Connection established";
-            rTfeed.StatusColor = Color.LawnGreen;
+            Debug.WriteLine("Listen End - " + client.Status + " - ");
         }
 
-        public void OnSessionStarted(bool isPolling)
+        public void onListenStart(LightstreamerClient client)
         {
-            if (isPolling)
+            Debug.WriteLine("Listen Start - " + client.Status + " - ");
+        }
+
+        public void onPropertyChange(string property)
+        {
+            Debug.WriteLine("Property " + property + " changed: ");
+            if (rTfeed.ls != null)
             {
-                Debug.WriteLine("Smart polling session started");
-                rTfeed.StatusText = "Smart polling session started";
-                rTfeed.StatusColor = Color.LightGreen;
+                if (property.Equals("serverInstanceAddress"))
+                {
+                    Debug.WriteLine(rTfeed.ls.connectionDetails.ServerAddress);
+                }
+                if (property.Equals("sessionId"))
+                {
+                    Debug.WriteLine(rTfeed.ls.connectionDetails.SessionId);
+                }
+
             }
-            else
+        }
+
+        public void onServerError(int errorCode, string errorMessage)
+        {
+            Debug.WriteLine("Server Error - " + errorMessage + " - " + errorCode);
+            rTfeed.StatusText = "Server failure: " + errorMessage;
+            rTfeed.StatusColor = Color.Red;
+
+            rTfeed.Connect();
+        }
+
+        public void onStatusChange(string status)
+        {
+            Debug.WriteLine(" >>>>>>>>>>>>>>>>>> " + status + " - ");
+
+            if (status.StartsWith("CONNECTED:WS"))
             {
-                Debug.WriteLine("Streaming session started");
-                rTfeed.StatusText = "Streaming session started";
-                rTfeed.StatusColor = Color.DarkGreen;
+                if (status.EndsWith("POLLING"))
+                {
+                    Debug.WriteLine("Smart polling session started");
+                    rTfeed.StatusText = "Smart polling session started";
+                    rTfeed.StatusColor = Color.LightGreen;
+                }
+                else if (status.EndsWith("STREAMING"))
+                {
+                    Debug.WriteLine("Streaming session started");
+                    rTfeed.StatusText = "Streaming session started";
+                    rTfeed.StatusColor = Color.DarkGreen;
+                }
+
+                rTfeed.SubscribeAll();
             }
-
-            rTfeed.SubscribeAll();
-        }
-
-        public void OnNewBytes(long newBytes)
-        {
-            this.bytes += newBytes;
-        }
-
-        public void OnDataError(PushServerException e)
-        {
-            Debug.WriteLine("Data error");
-            Debug.WriteLine(e);
-        }
-
-        public void OnActivityWarning(bool warningOn)
-        {
-            if (warningOn)
+            else if (status.StartsWith("CONNECTED:HT"))
             {
-                Debug.WriteLine("Connection stalled");
-                rTfeed.StatusText = "Connection stalled";
-                rTfeed.StatusColor = Color.DarkGoldenrod;
+                if (status.EndsWith("POLLING"))
+                {
+                    Debug.WriteLine("Smart polling session started");
+                    rTfeed.StatusText = "Smart polling session started";
+                    rTfeed.StatusColor = Color.LightGreen;
+                }
+                else if (status.EndsWith("STREAMING"))
+                {
+                    Debug.WriteLine("Streaming session started");
+                    rTfeed.StatusText = "Streaming session started";
+                    rTfeed.StatusColor = Color.DarkGreen;
+                }
+
+                rTfeed.SubscribeAll();
             }
-            else
+            else if (status.StartsWith("CONNECTING"))
+            {
+                Debug.WriteLine("Connecting ... ");
+                rTfeed.StatusText = "Connecting ... ";
+                rTfeed.StatusColor = Color.Orange;
+            }
+            else if (status.StartsWith("DISCONNECTED"))
+            {
+                Debug.WriteLine("Connection forcibly closed");
+                rTfeed.StatusText = "Connection forcibly closed";
+                rTfeed.StatusColor = Color.Red;
+            }
+            else if (status.StartsWith("STALLED"))
             {
                 Debug.WriteLine("Connection no longer stalled");
                 rTfeed.StatusText = "Connection no longer stalled";
                 rTfeed.StatusColor = Color.YellowGreen;
             }
-        }
-
-        public void OnClose()
-        {
-            Debug.WriteLine("total bytes: " + bytes);
-        }
-
-        public void OnEnd(int cause)
-        {
-            Debug.WriteLine("Connection forcibly closed");
-            rTfeed.StatusText = "Connection forcibly closed";
-            rTfeed.StatusColor = Color.Red;
-        }
-
-        public void OnFailure(PushServerException e)
-        {
-            Debug.WriteLine("Server failure");
-            Debug.WriteLine(e);
-            rTfeed.StatusText = "Server failure: " + e.Message;
-            rTfeed.StatusColor = Color.Red;
-
-            rTfeed.Connect();
-        }
-
-        public void OnFailure(PushConnException e)
-        {
-            Debug.WriteLine("Connection failure");
-            Debug.WriteLine(e);
-            rTfeed.StatusText = "Server failure: " + e.Message;
-            rTfeed.StatusColor = Color.Red;
-
-            rTfeed.Connect();
         }
     }
 }
