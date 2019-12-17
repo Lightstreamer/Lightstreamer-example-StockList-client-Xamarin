@@ -2,7 +2,7 @@
 
 <!-- START DESCRIPTION lightstreamer-example-stocklist-client-javascript-basic-stock-list-demo---electron-client -->
 
-This project contains a demo application showing the integration between the [Lightstreamer .Net Standard Client](https://lightstreamer.com/temp/temp_dotnet_unified_docs/) library and [Xamarin](https://docs.microsoft.com/it-it/xamarin/) cross-platform mobile application development tool.
+This project contains a demo application showing the integration between the [Lightstreamer .Net Standard Client](https://lightstreamer.com/api/ls-dotnetstandard-client/latest/) library and [Xamarin](https://docs.microsoft.com/it-it/xamarin/) cross-platform mobile application development tool.
 
 ![Demo ScreenShot](screen_large.png)<br>
 
@@ -21,8 +21,8 @@ This project shows how is it possible to integrate the <b>.Net Standard Client A
 * `AboutPage.xaml` and (`AboutPage.xaml.cs`) is tha About page and contains a brief intoduction to the demo.
 * `RTFeed.cs` class acts as a bridge between the pages and the Lightstreamer Client library, in order to subscribe the necessary Items and collect all updates in real time. Indeed this class is used as BindingContext for the viusal Xamarin widgets.
 This class also takes care of opening and closing the connection to the Lightstreamer server.
-* `TestConnectionListener.cs` this class implements the [ClientListener](https://lightstreamer.com/temp/temp_dotnet_unified_docs/api/com.lightstreamer.client.ClientListener.html) interface of Lightstreamer Client API, and receives all the information about changes in the status of the connection with the Lightstreamer server.
-* `QuoteListener.cs` and `DetailsListener.cs` implement the [SubscriptionListener](https://lightstreamer.com/temp/temp_dotnet_unified_docs/api/com.lightstreamer.client.SubscriptionListener.html) interface of Lightstreamer Client API, and receives the reale time updates for the Items subscribed.
+* `TestConnectionListener.cs` this class implements the [ClientListener](https://lightstreamer.com/api/ls-dotnetstandard-client/latest/api/com.lightstreamer.client.ClientListener.html) interface of Lightstreamer Client API, and receives all the information about changes in the status of the connection with the Lightstreamer server.
+* `QuoteListener.cs` and `DetailsListener.cs` implement the [SubscriptionListener](https://lightstreamer.com/api/ls-dotnetstandard-client/latest/api/com.lightstreamer.client.SubscriptionListener.html) interface of Lightstreamer Client API, and receives the reale time updates for the Items subscribed.
 
   
 Check out the sources for further explanations.<br>
@@ -38,8 +38,8 @@ To build your own version of the demo follow these steps:
 * You can choose the target devices between iOs, Androin and UWP.
 * You should complete this project with the <b>Lightstreamer .NET Standard Client</b> library, to be used for the build process, trough NuGet. Follow these steps:
 	* In the "Solution Explorer" tab, right click on the project and choose `Manage NuGet Packages ...`
-	* In the Search text box enter `Lightstreamer` and be sure to flag the *Include preliminary version* check-box
-	* Choose Lightstreamer.DotNetStandard.Client then click `Install` and then `Ok`
+	* In the Search text box enter `Lightstreamer`
+	* Choose <b>Lightstreamer.DotNetStandard.Client</b> then click `Install` and then `Ok`
 * You may run the demo against your local server or using our online server `push.lightstreamer.com`. The server to which the demo will connect to is configured in the `RTfeed.cs` file; by default the demo targets our demo server at https://push.lightstreamer.com.<br>
 	* In the former case, note that, as prerequisite, the [Lightstreamer - Stock- List Demo - Java Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Stocklist-adapter-java) has to be deployed on your local Lightstreamer Server instance. Please check out that project and follow the installation instructions provided with it.
 * Launch the Debug choosing your preferred platform and enjoy.
