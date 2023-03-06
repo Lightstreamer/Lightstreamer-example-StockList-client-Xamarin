@@ -161,12 +161,12 @@ namespace XDemo5
             }
         }
 
-        void SubscriptionListener.onListenEnd(Subscription subscription)
+        void SubscriptionListener.onListenEnd()
         {
             // ...
         }
 
-        void SubscriptionListener.onListenStart(Subscription subscription)
+        void SubscriptionListener.onListenStart()
         {
             // ...
         }

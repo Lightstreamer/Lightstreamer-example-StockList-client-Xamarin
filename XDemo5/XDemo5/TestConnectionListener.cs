@@ -25,7 +25,6 @@ namespace XDemo5
     internal class TestConnectionListener : ClientListener
     {
         private RTfeed rTfeed;
-        private long bytes;
 
         public TestConnectionListener(RTfeed rTfeed)
         {
@@ -34,14 +33,14 @@ namespace XDemo5
 
         // ---
 
-        public void onListenEnd(LightstreamerClient client)
+        public void onListenEnd()
         {
-            Debug.WriteLine("Listen End - " + client.Status + " - ");
+            Debug.WriteLine("Listen End");
         }
 
-        public void onListenStart(LightstreamerClient client)
+        public void onListenStart()
         {
-            Debug.WriteLine("Listen Start - " + client.Status + " - ");
+            Debug.WriteLine("Listen Start");
         }
 
         public void onPropertyChange(string property)

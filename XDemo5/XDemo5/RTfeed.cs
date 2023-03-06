@@ -21,6 +21,7 @@ using System.ComponentModel;
 using Xamarin.Forms;
 
 using com.lightstreamer.client;
+using com.lightstreamer.log;
 using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -38,6 +39,7 @@ namespace XDemo5
 
         public RTfeed()
         {
+            //LightstreamerClient.setLoggerProvider(new ConsoleLoggerProvider(ConsoleLogLevel.DEBUG));
 
             pushServerUrl = "http://push.lightstreamer.com";
             adapter = "DEMO";
