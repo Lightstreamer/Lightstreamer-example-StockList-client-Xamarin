@@ -1,0 +1,120 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5.Android/XDemo5.Android.csproj": {}
+  },
+  "projects": {
+    "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5.Android/XDemo5.Android.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5.Android/XDemo5.Android.csproj",
+        "projectName": "XDemo5.Android",
+        "projectPath": "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5.Android/XDemo5.Android.csproj",
+        "packagesPath": "/Users/acarioni/.nuget/packages/",
+        "outputPath": "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5.Android/obj/",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "/Users/acarioni/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "monoandroid13.0"
+        ],
+        "sources": {
+          "/Users/acarioni/git/lib-client-haxe/bin/cs/dist": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "monoandroid13.0": {
+            "projectReferences": {
+              "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5/XDemo5.csproj": {
+                "projectPath": "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5/XDemo5.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "monoandroid13.0": {
+          "dependencies": {
+            "Xamarin.Essentials": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2196, )"
+            }
+          }
+        }
+      }
+    },
+    "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5/XDemo5.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5/XDemo5.csproj",
+        "projectName": "XDemo5",
+        "projectPath": "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5/XDemo5.csproj",
+        "packagesPath": "/Users/acarioni/.nuget/packages/",
+        "outputPath": "/Users/acarioni/git/examples/example-StockList-client-Xamarin/XDemo5/XDemo5/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/acarioni/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "/Users/acarioni/git/lib-client-haxe/bin/cs/dist": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Lightstreamer.DotNetStandard.Client": {
+              "target": "Package",
+              "version": "[6.0.0-beta.1, )"
+            },
+            "Xamarin.Essentials": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2196, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.408/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
