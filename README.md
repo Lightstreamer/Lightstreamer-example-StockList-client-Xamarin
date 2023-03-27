@@ -56,7 +56,7 @@ To build your own version of the demo follow these steps:
 
 ### Related Projects
 
-* [Lightstreamer .NET Standard Client SDK](https://github.com/Lightstreamer/Lightstreamer-lib-client-dotnet)
+* [Lightstreamer .NET Standard Client SDK](https://github.com/Lightstreamer/Lightstreamer-lib-client-haxe)
 * [Lightstreamer - Stock-List Demos - HTML Clients](https://github.com/Lightstreamer/Lightstreamer-example-Stocklist-client-javascript)
 * [Lightstreamer - Basic Stock-List Demo - jQuery (jqGrid) Client](https://github.com/Lightstreamer/Lightstreamer-example-StockList-client-jquery)
 * [Lightstreamer - Basic Stock-List Demo - Electron Client](https://github.com/Lightstreamer/Lightstreamer-example-StockList-client-electron)
@@ -65,7 +65,7 @@ To build your own version of the demo follow these steps:
 
 ## Lightstreamer Compatibility Notes 
 
-* Compatible with Lightstreamer .NET Standard Client Library version 6.0 and Lightstreamer Server 7.3.2.
+* Compatible with Lightstreamer .NET Standard Client Library version 6 and Lightstreamer Server 7.3.2.
 * Ensure that .Net Standard Client API is supported by Lightstreamer Server license configuration.
 * For instructions compatible with .NET Standard Client library version 5.x, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-StockList-client-Xamarin/tree/for_client_5.x).
 * For instructions compatible with .NET Standard Client library version 4.x, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-StockList-client-Xamarin/tree/for_client_4.x).
