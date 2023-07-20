@@ -36,10 +36,14 @@ namespace XDemo5
 
             _myClass = f;
 
-            ToolbarItems.Add(new ToolbarItem("About", "menu.png", () => {
+            var ti = new ToolbarItem();
+            ti.Text = "About";
+            ti.Clicked += (sender, e) =>
+            {
                 Navigation.PushAsync(new AboutPage());
                 Debug.WriteLine("About Page.");
-            }));
+            };
+            ToolbarItems.Add(ti);
 
             BindingContext = _myClass;
 

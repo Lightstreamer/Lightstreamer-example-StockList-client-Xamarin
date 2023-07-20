@@ -27,7 +27,7 @@ namespace XDemo5
             var tdlx = new MainPage(f);
 
             var mainNav = new NavigationPage(tdlx);
-            mainNav.Icon = "icon.png";
+            mainNav.IconImageSource = "icon.png";
 
             return mainNav;
         }
